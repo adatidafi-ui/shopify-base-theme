@@ -1,0 +1,63 @@
+{
+  "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you requested does not exist. Click {link} to continue shopping.",
+      "link_text": "here"
+    },
+    "password_page": {
+      "opening_soon": "Coming soon",
+      "closed_for_maintenance": "Temporarily closed for maintenance",
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_error": "Wrong password! Please try again.",
+      "login_form_submit": "Enter",
+      "signup_form_heading": "Get notified when we open",
+      "signup_form_email_label": "Email address",
+      "signup_form_email_placeholder": "your@email.com",
+      "signup_form_submit": "Notify me",
+      "signup_form_success": "We will send you an email when the store is ready to launch."
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Shopping cart",
+      "remove_title": "Remove {title}"
+    },
+    "cart_error": {
+      "subtitle": "Please check your cart as some items are currently unavailable.",
+      "discount_exceeds_maximum": "The discount cannot exceed the maximum order amount."
+    },
+    "label": {
+      "title": "Cart",
+      "total_count": "{count} item",
+      "total_count_plural": "{count} items"
+    }
+  },
+  "products": {
+    "general": {
+      "related_title": "You might also like",
+      "quantity_label": "Quantity",
+      "quantity_input_label": "Quantity for {product_title}",
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    },
+    "product": {
+      "include_taxes": "Tax included.",
+      "shipping_policy_html": "Shipping calculated at checkout.",
+      "choose_options": "Choose options",
+      "choose_product_options": "Choose options for {product_title}",
+      "value_unavailable": "This {option_value} is currently unavailable."
+    }
+  },
+  "newsletter": {
+    "label": "Email address",
+    "success": "Thanks for subscribing!",
+    "button_label": "Subscribe"
+  },
+  "footer": {
+    "payment_methods": "Payment methods"
+  }
+}

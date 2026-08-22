@@ -1,0 +1,8 @@
+name = "Shopify Premium Base Theme"
+description = "A production-ready, high-converting, reusable Shopify Online Store 2.0 theme for rapid DTC launches."
+version = "1.0.0"
+scope = "sections:*"
+
+[theme]
+name = "Shopify Premium Base Theme"
+screenshotUrl = "https://cdn.shopify.com/s/files/1/0000/0000/0000/t/0/assets/placeholder.jpg"
