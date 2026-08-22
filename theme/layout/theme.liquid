@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <title>{% if page_title %}{{ page_title }} | {% endif %}{{ shop.name }}</title>
+  <meta name="description" content="{{ page_description | escape }}">
+  
+  {% if favicon %}
+    <link rel="icon" type="image/x-icon" href="{{ favicon | image_url: width: 192 }}">
+  {% endif %}
+  
+  <!-- Stylesheets -->
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'components.css' | asset_url | stylesheet_tag }}
+  
+  <!-- Theme Settings CSS Variables -->
+  <style>
+    :root {
+      --color-primary: {{ settings.color_primary }};
+      --color-secondary: {{ settings.color_secondary }};
+      --color-accent: {{ settings.color_accent }};
+      --color-background: {{ settings.color_background }};
+      --color-text: {{ settings.color_text }};
+      --color-text-light: {{ settings.color_text_light }};
+      --color-border: {{ settings.color_border }};
+      --container-width: {{ settings.container_width }}px;
+      --border-radius: {{ settings.border_radius }}px;
+    }
+    
+    body {
+      font-family: {{ settings.font_body.fallback_families }};
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: {{ settings.font_heading.fallback_families }};
+    }
+  </style>
+  
+  <!-- Shopify specifics -->
+  {{ content_for_header }}
+</head>
+<body>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+  
+  <main id="MainContent" class="main-content">
+    {{ content_for_layout }}
+  </main>
+  
+  {% section 'footer' %}
+  
+  <!-- Cart Drawer -->
+  <div data-cart-drawer class="cart-drawer">
+    <div class="cart-drawer-header">
+      <h2>Cart</h2>
+      <button data-cart-close class="cart-drawer-close">×</button>
+    </div>
+    <div class="cart-drawer-content" id="cart-drawer-content">
+      <p>Your cart is empty</p>
+    </div>
+    <div class="cart-drawer-footer">
+      <button class="button button-primary" style="width: 100%;">Proceed to Checkout</button>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu Overlay -->
+  <div data-mobile-menu class="mobile-menu">
+    <button data-menu-close class="mobile-menu-close">×</button>
+    <nav class="mobile-nav">
+      <!-- Navigation links go here -->
+    </nav>
+  </div>
+  
+  <!-- Scripts -->
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

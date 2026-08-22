@@ -1,0 +1,174 @@
+<div class="product-page">
+  <div class="container">
+    <div class="breadcrumb" style="margin-bottom: var(--spacing-2xl);">
+      <a href="/">Home</a> 
+      {% if collection %}
+        > <a href="{{ collection.url }}">{{ collection.title }}</a>
+      {% endif %}
+      > <span>{{ product.title }}</span>
+    </div>
+    
+    <div class="product-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); margin-bottom: var(--spacing-2xl);">
+      <!-- Product Gallery -->
+      <div class="product-gallery">
+        <div class="product-gallery-main" style="margin-bottom: var(--spacing-lg);">
+          {% if product.featured_image %}
+            <img 
+              src="{{ product.featured_image | image_url: width: 600 }}" 
+              alt="{{ product.featured_image.alt }}"
+              style="width: 100%; display: block; border-radius: var(--border-radius);"
+            >
+          {% endif %}
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="product-gallery-thumbs" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md);">
+            {% for image in product.images %}
+              <img 
+                src="{{ image | image_url: width: 100 }}" 
+                alt="{{ image.alt }}"
+                style="cursor: pointer; opacity: 0.6; border-radius: var(--border-radius);"
+              >
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Product Info -->
+      <div class="product-info">
+        <h1 style="margin-bottom: var(--spacing-md);">{{ product.title }}</h1>
+        
+        {% if product.rating %}
+          <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+            <div class="star-rating">
+              {% for i in (1..5) %}
+                <span class="star {% if i <= product.rating %}is-filled{% endif %}">★</span>
+              {% endfor %}
+            </div>
+            <span style="color: var(--color-text-light);">{{ product.rating }} / 5 ({{ product.reviews_count }} reviews)</span>
+          </div>
+        {% endif %}
+        
+        <!-- Price Section -->
+        <div style="margin-bottom: var(--spacing-lg);">
+          {% if product.compare_at_price %}
+            <div style="display: flex; gap: var(--spacing-md); align-items: baseline;">
+              <span style="font-size: 1.5rem; font-weight: 700; color: var(--color-accent);">{{ product.price | money }}</span>
+              <span style="font-size: 1rem; text-decoration: line-through; color: var(--color-text-light);">{{ product.compare_at_price | money }}</span>
+              <span class="badge badge-success">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round }}%</span>
+            </div>
+          {% else %}
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--color-text);">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+        
+        <!-- Product Form -->
+        <form method="post" action="/cart/add" data-product-form style="margin-bottom: var(--spacing-lg);">
+          {% if product.options.size > 0 %}
+            {% for option in product.options %}
+              <div style="margin-bottom: var(--spacing-lg);">
+                <label style="display: block; font-weight: 600; margin-bottom: var(--spacing-sm);">{{ option.name }}</label>
+                <select name="options[{{ option.name }}]" data-product-option style="width: 100%;">
+                  {% for value in option.values %}
+                    <option value="{{ value }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          <!-- Quantity -->
+          <div style="margin-bottom: var(--spacing-lg); display: flex; align-items: center; gap: var(--spacing-md);">
+            <label style="font-weight: 600;">Quantity:</label>
+            <div style="display: flex; align-items: center; border: 1px solid var(--color-border); border-radius: var(--border-radius); width: fit-content;">
+              <button type="button" style="background: none; border: none; padding: var(--spacing-sm) var(--spacing-md); cursor: pointer;">−</button>
+              <input type="number" name="quantity" value="1" min="1" style="width: 50px; text-align: center; border: none; font-size: 1rem;">
+              <button type="button" style="background: none; border: none; padding: var(--spacing-sm) var(--spacing-md); cursor: pointer;">+</button>
+            </div>
+          </div>
+          
+          <!-- CTA Buttons -->
+          <button type="submit" class="button button-primary" style="width: 100%; margin-bottom: var(--spacing-md);">
+            Add to Cart
+          </button>
+          
+          {% if shop.checkout.express_checkout_enabled %}
+            <button type="submit" class="button button-secondary" style="width: 100%;" name="checkout">
+              Buy Now
+            </button>
+          {% endif %}
+        </form>
+        
+        <!-- Trust Elements -->
+        <div style="padding: var(--spacing-lg); background-color: var(--color-border); border-radius: var(--border-radius); margin-bottom: var(--spacing-lg);">
+          <div style="display: flex; flex-direction: column; gap: var(--spacing-sm); font-size: 0.9rem;">
+            <div>✓ Ships in 24 hours</div>
+            <div>✓ 30-day returns</div>
+            <div>✓ 100% satisfaction guarantee</div>
+          </div>
+        </div>
+        
+        <!-- Collapsible Info -->
+        <div class="accordion" style="margin-bottom: var(--spacing-2xl);">
+          <div class="accordion-item">
+            <button class="accordion-trigger" data-accordion-trigger>
+              When will it arrive?
+              <span class="accordion-trigger-icon">▼</span>
+            </button>
+            <div class="accordion-panel">
+              <div class="accordion-content">
+                Standard shipping arrives in 5-7 business days. Express shipping available.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" data-accordion-trigger>
+              What's your return policy?
+              <span class="accordion-trigger-icon">▼</span>
+            </button>
+            <div class="accordion-panel">
+              <div class="accordion-content">
+                We offer 30-day returns on all products. No questions asked.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Product Details Tabs -->
+    <div style="margin-bottom: var(--spacing-2xl);">
+      <div style="border-bottom: 1px solid var(--color-border); display: flex; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+        <button style="padding: var(--spacing-lg) 0; border-bottom: 2px solid var(--color-accent); background: none; border: none; font-weight: 600; cursor: pointer;">Description</button>
+        <button style="padding: var(--spacing-lg) 0; background: none; border: none; color: var(--color-text-light); cursor: pointer;">Specifications</button>
+        <button style="padding: var(--spacing-lg) 0; background: none; border: none; color: var(--color-text-light); cursor: pointer;">Reviews</button>
+      </div>
+      
+      <div style="line-height: 1.8;">
+        {% if product.description %}
+          {{ product.description }}
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Related Products -->
+    {% if product.related_products.size > 0 %}
+      <div style="margin-bottom: var(--spacing-2xl);">
+        <h2 style="text-align: center; margin-bottom: var(--spacing-2xl);">You might also like</h2>
+        <div class="grid-4">
+          {% for related_product in product.related_products limit: 4 %}
+            {% include 'product-card' with related_product %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Sticky Mobile CTA -->
+<div data-sticky-cart style="display: none; position: fixed; bottom: 0; left: 0; right: 0; padding: var(--spacing-md); background-color: var(--color-background); border-top: 1px solid var(--color-border); z-index: 200;">
+  <form method="post" action="/cart/add" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+    <input type="hidden" name="id" value="{{ product.selected_variant.id }}">
+    <input type="number" name="quantity" value="1" min="1" style="padding: var(--spacing-md);">
+    <button type="submit" class="button button-primary">Add to Cart</button>
+  </form>
+</div>

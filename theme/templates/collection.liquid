@@ -1,0 +1,49 @@
+<div class="collection-page">
+  <div class="container">
+    <h1 style="margin-bottom: var(--spacing-2xl);">{{ collection.title }}</h1>
+    
+    {% if collection.description %}
+      <p style="margin-bottom: var(--spacing-2xl); color: var(--color-text-light);">{{ collection.description }}</p>
+    {% endif %}
+    
+    <!-- Filters & Sort -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-2xl);">
+      <div>{{ collection.products.size }} products</div>
+      <select style="padding: var(--spacing-md);">
+        <option>Sort by</option>
+        <option>Newest</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Best Selling</option>
+      </select>
+    </div>
+    
+    <!-- Products Grid -->
+    <div class="grid-4">
+      {% for product in collection.products %}
+        {% include 'product-card' %}
+      {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if paginate.pages > 1 %}
+      <div style="text-align: center; margin-top: var(--spacing-2xl);">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" class="button button-secondary">← Previous</a>
+        {% endif %}
+        
+        {% for page in (1..paginate.pages) %}
+          {% if page == paginate.current_page %}
+            <button disabled class="button" style="opacity: 0.5;">{{ page }}</button>
+          {% else %}
+            <a href="{{ collection.url }}?page={{ page }}" class="button button-secondary">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
+        
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" class="button button-secondary">Next →</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
