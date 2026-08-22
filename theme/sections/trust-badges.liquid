@@ -1,0 +1,74 @@
+{% comment %}
+  TRUST BADGES SECTION
+  - Multiple trust signals
+  - Customizable icons and text
+  - 3-4 column layout
+{% endcomment %}
+
+{% if section.settings.enabled %}
+  <section style="padding: var(--spacing-2xl) var(--spacing-lg); background-color: var(--color-border);">
+    <div class="container">
+      <div class="grid-4" style="margin: 0;">
+        {% for block in section.blocks %}
+          <div style="text-align: center;">
+            {% if block.settings.icon %}
+              <div style="font-size: 2rem; margin-bottom: var(--spacing-md);">{{ block.settings.icon }}</div>
+            {% endif %}
+            <h6 style="margin-bottom: var(--spacing-xs);">{{ block.settings.title }}</h6>
+            <p style="font-size: 0.9375rem; color: var(--color-text-light); margin: 0;">{{ block.settings.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable this section",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji or symbol)",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "On orders over $50"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        {"type": "badge", "settings": {"icon": "✓", "title": "Free Shipping", "description": "On orders over $50"}},
+        {"type": "badge", "settings": {"icon": "✓", "title": "30-Day Returns", "description": "No questions asked"}},
+        {"type": "badge", "settings": {"icon": "✓", "title": "100% Secure", "description": "Encrypted checkout"}}
+      ]
+    }
+  ]
+}
+{% endschema %}

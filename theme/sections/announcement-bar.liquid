@@ -1,0 +1,55 @@
+{% comment %}
+  ANNOUNCEMENT BAR SECTION
+  - Customizable announcement text
+  - Dismissible option
+  - Background color configurable via Theme Editor
+{% endcomment %}
+
+{% if section.settings.enabled %}
+  <div class="announcement-bar" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
+    <div class="container" style="display: flex; align-items: center; justify-content: center;">
+      <span>{{ section.settings.text }}</span>
+      {% if section.settings.dismissible %}
+        <button class="announcement-bar-close" aria-label="Close announcement">×</button>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "📦 Free shipping on orders over $50"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow users to dismiss",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

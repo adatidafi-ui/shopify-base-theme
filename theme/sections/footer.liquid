@@ -1,0 +1,89 @@
+{% comment %}
+  FOOTER SECTION
+  - Multiple columns with links
+  - Newsletter signup
+  - Social media
+  - Payment icons
+{% endcomment %}
+
+<footer class="footer" style="background-color: var(--color-border); padding-top: var(--spacing-2xl); padding-bottom: var(--spacing-2xl);">
+  <div class="container">
+    <div class="grid-4" style="margin-bottom: var(--spacing-2xl);">
+      <!-- Column 1 -->
+      <div>
+        <h5 style="margin-bottom: var(--spacing-lg);">Shop</h5>
+        <ul style="list-style: none; margin: 0; padding: 0;">
+          <li><a href="/collections/all" style="font-size: 0.9375rem; color: var(--color-text-light);">All Products</a></li>
+          <li><a href="/collections" style="font-size: 0.9375rem; color: var(--color-text-light);">Collections</a></li>
+          <li><a href="/pages/deals" style="font-size: 0.9375rem; color: var(--color-text-light);">Special Offers</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 2 -->
+      <div>
+        <h5 style="margin-bottom: var(--spacing-lg);">Company</h5>
+        <ul style="list-style: none; margin: 0; padding: 0;">
+          <li><a href="/pages/about" style="font-size: 0.9375rem; color: var(--color-text-light);">About Us</a></li>
+          <li><a href="/blogs/news" style="font-size: 0.9375rem; color: var(--color-text-light);">Blog</a></li>
+          <li><a href="/pages/careers" style="font-size: 0.9375rem; color: var(--color-text-light);">Careers</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 3 -->
+      <div>
+        <h5 style="margin-bottom: var(--spacing-lg);">Support</h5>
+        <ul style="list-style: none; margin: 0; padding: 0;">
+          <li><a href="/pages/contact" style="font-size: 0.9375rem; color: var(--color-text-light);">Contact</a></li>
+          <li><a href="/pages/shipping" style="font-size: 0.9375rem; color: var(--color-text-light);">Shipping Info</a></li>
+          <li><a href="/pages/returns" style="font-size: 0.9375rem; color: var(--color-text-light);">Returns</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 4: Newsletter (if enabled) -->
+      {% if section.settings.newsletter_enabled %}
+        <div>
+          <h5 style="margin-bottom: var(--spacing-lg);">Newsletter</h5>
+          <p style="font-size: 0.9375rem; margin-bottom: var(--spacing-lg);">{{ section.settings.newsletter_text }}</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--spacing-sm);">
+            <input type="email" placeholder="your@email.com" required style="flex: 1;">
+            <button type="submit" class="button button-primary">Subscribe</button>
+          </form>
+        </div>
+      {% endif %}
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;">
+      <p style="font-size: 0.875rem; color: var(--color-text-light); margin: 0;">
+        {{ settings.footer_copyright }}
+      </p>
+      
+      {% if settings.footer_payment_icons %}
+        <div style="display: flex; gap: var(--spacing-md); align-items: center;">
+          <span style="font-size: 0.8125rem; color: var(--color-text-light);">We accept:</span>
+          <svg width="24" height="16" viewBox="0 0 24 16" style="opacity: 0.6;"><rect fill="currentColor" width="24" height="16" rx="2"/></svg>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "newsletter_enabled",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter description",
+      "default": "Subscribe for exclusive updates and offers."
+    }
+  ]
+}
+{% endschema %}
