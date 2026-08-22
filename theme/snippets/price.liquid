@@ -1,0 +1,22 @@
+{% comment %}
+  PRICE SNIPPET
+  - Formats and displays product pricing
+  - Shows compare-at price and discount
+  - Reusable across templates
+{% endcomment %}
+
+<div class="price-display">
+  {% if product.compare_at_price %}
+    <div style="display: flex; gap: var(--spacing-md); align-items: baseline;">
+      <span style="font-size: 1.5rem; font-weight: 700; color: var(--color-accent);">{{ product.price | money }}</span>
+      <span style="text-decoration: line-through; color: var(--color-text-light);">{{ product.compare_at_price | money }}</span>
+      <span class="badge badge-success">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round }}%</span>
+    </div>
+  {% else %}
+    <span style="font-size: 1.5rem; font-weight: 700; color: var(--color-text);">{{ product.price | money }}</span>
+  {% endif %}
+  
+  {% if product.price_varies %}
+    <p style="font-size: 0.875rem; color: var(--color-text-light); margin-top: var(--spacing-sm);">From {{ product.price_min | money }} to {{ product.price_max | money }}</p>
+  {% endif %}
+</div>

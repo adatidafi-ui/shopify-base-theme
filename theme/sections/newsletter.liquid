@@ -1,0 +1,81 @@
+{% comment %}
+  NEWSLETTER SECTION
+  - Email signup form
+  - Customizable heading and description
+  - Integrates with Shopify's native email marketing
+{% endcomment %}
+
+<section style="padding: var(--spacing-2xl) var(--spacing-lg); background: linear-gradient(135deg, {{ section.settings.bg_color_1 }} 0%, {{ section.settings.bg_color_2 }} 100%);">
+  <div class="container" style="max-width: 600px; text-align: center; color: {{ section.settings.text_color }};">
+    <h2 style="margin-bottom: var(--spacing-md);">{{ section.settings.title }}</h2>
+    <p style="font-size: 1.0625rem; margin-bottom: var(--spacing-2xl);">{{ section.settings.description }}</p>
+    
+    <form class="newsletter-form" style="display: flex; gap: var(--spacing-sm); justify-content: center;">
+      <input 
+        type="email" 
+        name="email" 
+        placeholder="your@email.com" 
+        required 
+        style="flex: 1; max-width: 300px; padding: var(--spacing-md) var(--spacing-lg); border: none; border-radius: var(--border-radius);"
+      >
+      <button type="submit" class="button button-primary">{{ section.settings.button_text }}</button>
+    </form>
+    
+    <p style="font-size: 0.8125rem; margin-top: var(--spacing-lg); opacity: 0.8;">{{ section.settings.privacy_text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Subscribe for Exclusive Offers"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Get 10% off your first order and stay updated with our latest products and promotions."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "privacy_text",
+      "label": "Privacy text",
+      "default": "We respect your privacy. Unsubscribe at any time."
+    },
+    {
+      "type": "color",
+      "id": "bg_color_1",
+      "label": "Background color 1",
+      "default": "#0066cc"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_2",
+      "label": "Background color 2",
+      "default": "#00d4ff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

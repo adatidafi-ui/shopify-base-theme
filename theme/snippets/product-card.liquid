@@ -1,0 +1,52 @@
+{% comment %}
+  PRODUCT CARD SNIPPET
+  - Reusable product card component
+  - Used in collections and related products
+  - Shows image, title, rating, price, add to cart
+{% endcomment %}
+
+<div class="product-card">
+  <div class="product-card-image">
+    {% if product.featured_image %}
+      <img 
+        src="{{ product.featured_image | image_url: width: 300 }}" 
+        alt="{{ product.featured_image.alt }}"
+        loading="lazy"
+      >
+    {% endif %}
+    {% if product.compare_at_price %}
+      <div class="product-card-badge">
+        <span class="badge badge-primary">Save {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round }}%</span>
+      </div>
+    {% endif %}
+  </div>
+  
+  <div class="product-card-body">
+    <a href="{{ product.url }}" style="text-decoration: none; color: inherit;">
+      <h3 class="product-card-title">{{ product.title }}</h3>
+    </a>
+    
+    {% if product.rating %}
+      <div class="product-card-rating">
+        <div class="product-card-stars">
+          {% for i in (1..5) %}
+            <span class="product-card-star {% if i <= product.rating %}is-filled{% endif %}">★</span>
+          {% endfor %}
+        </div>
+        <span>({{ product.reviews_count }})</span>
+      </div>
+    {% endif %}
+    
+    <div class="product-card-price">
+      <span class="product-card-price-regular">{{ product.price | money }}</span>
+      {% if product.compare_at_price %}
+        <span class="product-card-price-compare">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+    </div>
+    
+    <form method="post" action="/cart/add" style="margin: 0;">
+      <input type="hidden" name="id" value="{{ product.selected_variant.id | default: product.variants.first.id }}">
+      <button type="submit" class="button button-primary product-card-button">Add to Cart</button>
+    </form>
+  </div>
+</div>
