@@ -1,0 +1,72 @@
+{% comment %}
+  FAQ SECTION
+  - Accordion layout
+  - Customizable via blocks
+  - Collapse/expand animation
+{% endcomment %}
+
+<section style="padding: var(--spacing-2xl) var(--spacing-lg);">
+  <div class="container" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+    <h2 style="text-align: center; margin-bottom: var(--spacing-2xl);">{{ section.settings.title }}</h2>
+    
+    <div class="accordion">
+      {% for block in section.blocks %}
+        <div class="accordion-item">
+          <button class="accordion-trigger" data-accordion-trigger>
+            {{ block.settings.question }}
+            <span class="accordion-trigger-icon">▼</span>
+          </button>
+          <div class="accordion-panel">
+            <div class="accordion-content">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We offer a 30-day money-back guarantee on all products. No questions asked."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {"type": "faq", "settings": {"question": "What is your return policy?", "answer": "We offer a 30-day money-back guarantee. If you're not satisfied, simply return the product for a full refund."}},
+        {"type": "faq", "settings": {"question": "How long does shipping take?", "answer": "Standard shipping takes 5-7 business days. Express shipping is available for 1-2 day delivery."}},
+        {"type": "faq", "settings": {"question": "Is this product eco-friendly?", "answer": "Yes! Our products are made with sustainable materials and environmentally conscious practices."}}
+      ]
+    }
+  ]
+}
+{% endschema %}

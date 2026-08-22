@@ -1,0 +1,107 @@
+{% comment %}
+  BENEFITS SECTION
+  - 2 layout variants (grid, alternating)
+  - Icon + title + description
+  - Customizable via blocks
+{% endcomment %}
+
+<section style="padding: var(--spacing-2xl) var(--spacing-lg);">
+  <div class="container">
+    <h2 style="text-align: center; margin-bottom: var(--spacing-2xl);">{{ section.settings.title }}</h2>
+    
+    {% if section.settings.layout == 'grid' %}
+      <div class="grid-4" style="margin: 0;">
+        {% for block in section.blocks %}
+          <div style="text-align: center;">
+            {% if block.settings.icon %}
+              <div style="font-size: 2.5rem; margin-bottom: var(--spacing-lg);">{{ block.settings.icon }}</div>
+            {% endif %}
+            <h4 style="margin-bottom: var(--spacing-md);">{{ block.settings.title }}</h4>
+            <p style="color: var(--color-text-light); line-height: 1.6;">{{ block.settings.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    {% elsif section.settings.layout == 'alternating' %}
+      {% for block in section.blocks %}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); align-items: center; margin-bottom: var(--spacing-2xl); {% if forloop.index % 2 == 0 %}grid-auto-flow: dense;{% endif %}">
+          <div>
+            <div style="font-size: 3rem; margin-bottom: var(--spacing-lg);">{{ block.settings.icon }}</div>
+            <h3 style="margin-bottom: var(--spacing-lg);">{{ block.settings.title }}</h3>
+            <p style="font-size: 1.0625rem; line-height: 1.8; color: var(--color-text-light);">{{ block.settings.description }}</p>
+          </div>
+          {% if block.settings.image %}
+            <div>
+              <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.title }}" style="width: 100%; border-radius: var(--border-radius);">
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Why Choose Us"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {"value": "grid", "label": "4-column grid"},
+        {"value": "alternating", "label": "Alternating image & text"}
+      ],
+      "default": "grid"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🌟"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Made with the finest materials for durability and style."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits",
+      "blocks": [
+        {"type": "benefit", "settings": {"icon": "🌟", "title": "Premium Quality", "description": "Crafted with the finest materials and attention to detail."}},
+        {"type": "benefit", "settings": {"icon": "⚡", "title": "Fast Shipping", "description": "Ships within 24 hours to your doorstep."}},
+        {"type": "benefit", "settings": {"icon": "🔰", "title": "Lifetime Support", "description": "We're here to help whenever you need us."}},
+        {"type": "benefit", "settings": {"icon": "🎉", "title": "Satisfaction Guaranteed", "description": "Love it or your money back within 30 days."}}
+      ]
+    }
+  ]
+}
+{% endschema %}

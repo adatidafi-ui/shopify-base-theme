@@ -1,0 +1,85 @@
+{% comment %}
+  PROBLEM/SOLUTION SECTION
+  - Left: Problem statement + image
+  - Right: Solution statement + image
+  - Conversion-focused copy
+{% endcomment %}
+
+<section style="padding: var(--spacing-2xl) var(--spacing-lg); background-color: var(--color-border);">
+  <div class="container">
+    <!-- Problem Section -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); align-items: center; margin-bottom: var(--spacing-2xl);">
+      <div>
+        <h3 style="color: var(--color-accent); margin-bottom: var(--spacing-md);">The Problem</h3>
+        <h2 style="margin-bottom: var(--spacing-lg);">{{ section.settings.problem_title }}</h2>
+        <p style="font-size: 1.0625rem; line-height: 1.8; color: var(--color-text-light);">{{ section.settings.problem_description }}</p>
+      </div>
+      {% if section.settings.problem_image %}
+        <div>
+          <img src="{{ section.settings.problem_image | image_url: width: 500 }}" alt="Problem" style="width: 100%; border-radius: var(--border-radius);">
+        </div>
+      {% endif %}
+    </div>
+    
+    <!-- Solution Section -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); align-items: center;">
+      {% if section.settings.solution_image %}
+        <div>
+          <img src="{{ section.settings.solution_image | image_url: width: 500 }}" alt="Solution" style="width: 100%; border-radius: var(--border-radius);">
+        </div>
+      {% endif %}
+      <div>
+        <h3 style="color: var(--color-accent); margin-bottom: var(--spacing-md);">Our Solution</h3>
+        <h2 style="margin-bottom: var(--spacing-lg);">{{ section.settings.solution_title }}</h2>
+        <p style="font-size: 1.0625rem; line-height: 1.8; color: var(--color-text-light);">{{ section.settings.solution_description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Problem/Solution",
+  "settings": [
+    {
+      "type": "text",
+      "id": "problem_title",
+      "label": "Problem headline",
+      "default": "Are you tired of low-quality products?"
+    },
+    {
+      "type": "textarea",
+      "id": "problem_description",
+      "label": "Problem description",
+      "default": "Most products on the market are made with cheap materials and don't last. You deserve better."
+    },
+    {
+      "type": "image_picker",
+      "id": "problem_image",
+      "label": "Problem image"
+    },
+    {
+      "type": "text",
+      "id": "solution_title",
+      "label": "Solution headline",
+      "default": "That's why we created [Product Name]"
+    },
+    {
+      "type": "textarea",
+      "id": "solution_description",
+      "label": "Solution description",
+      "default": "Built with premium materials and engineered for durability. Our product is designed to last, perform, and look great."
+    },
+    {
+      "type": "image_picker",
+      "id": "solution_image",
+      "label": "Solution image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Problem/Solution"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,103 @@
+{% comment %}
+  FEATURED PRODUCT SECTION
+  - 60/40 layout (image/info)
+  - Highlights single product
+  - Showcase key benefits
+{% endcomment %}
+
+<section style="padding: var(--spacing-2xl) var(--spacing-lg);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-2xl); align-items: center;">
+      <!-- Product Image -->
+      {% if section.settings.product != blank %}
+        <div>
+          {% if section.settings.product.featured_image %}
+            <img src="{{ section.settings.product.featured_image | image_url: width: 600 }}" alt="{{ section.settings.product.featured_image.alt }}" style="width: 100%; border-radius: var(--border-radius);">
+          {% endif %}
+        </div>
+        
+        <!-- Product Info -->
+        <div>
+          <h2 style="margin-bottom: var(--spacing-lg);">{{ section.settings.product.title }}</h2>
+          
+          {% if section.settings.product.rating %}
+            <div style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+              <div class="star-rating">
+                {% for i in (1..5) %}
+                  <span class="star {% if i <= section.settings.product.rating %}is-filled{% endif %}">★</span>
+                {% endfor %}
+              </div>
+              <span style="color: var(--color-text-light);">{{ section.settings.product.rating }} / 5</span>
+            </div>
+          {% endif %}
+          
+          <p style="font-size: 1rem; line-height: 1.6; margin-bottom: var(--spacing-lg); color: var(--color-text-light);">{{ section.settings.product.description | strip_html | truncatewords: 30 }}</p>
+          
+          <!-- Benefits List -->
+          {% if section.settings.benefit_1 %}
+            <ul style="list-style: none; margin-bottom: var(--spacing-lg); padding: 0;">
+              {% if section.settings.benefit_1 %}<li style="margin-bottom: var(--spacing-sm);"><strong>✓</strong> {{ section.settings.benefit_1 }}</li>{% endif %}
+              {% if section.settings.benefit_2 %}<li style="margin-bottom: var(--spacing-sm);"><strong>✓</strong> {{ section.settings.benefit_2 }}</li>{% endif %}
+              {% if section.settings.benefit_3 %}<li style="margin-bottom: var(--spacing-sm);"><strong>✓</strong> {{ section.settings.benefit_3 }}</li>{% endif %}
+            </ul>
+          {% endif %}
+          
+          <!-- Price -->
+          <div style="margin-bottom: var(--spacing-lg);">
+            {% if section.settings.product.compare_at_price %}
+              <div style="display: flex; gap: var(--spacing-md); align-items: baseline;">
+                <span style="font-size: 1.5rem; font-weight: 700; color: var(--color-accent);">{{ section.settings.product.price | money }}</span>
+                <span style="text-decoration: line-through; color: var(--color-text-light);">{{ section.settings.product.compare_at_price | money }}</span>
+              </div>
+            {% else %}
+              <span style="font-size: 1.5rem; font-weight: 700;">{{ section.settings.product.price | money }}</span>
+            {% endif %}
+          </div>
+          
+          <!-- CTA -->
+          <a href="{{ section.settings.product.url }}" class="button button-primary" style="width: 100%; text-align: center; display: inline-block;">Shop This Product</a>
+        </div>
+      {% else %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-2xl);">
+          <p style="color: var(--color-text-light);">Please select a product</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Product",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefit 1",
+      "default": "Premium quality materials"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefit 2",
+      "default": "Eco-friendly production"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefit 3",
+      "default": "Lifetime warranty"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product"
+    }
+  ]
+}
+{% endschema %}
